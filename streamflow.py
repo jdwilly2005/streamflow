@@ -92,4 +92,19 @@ dates, flows = load_streamflow("June-2021-Provo-River-Streamflow-Rates.csv")
 # window opens (the program pauses at plt.show() until the window is closed)
 summarize(dates, flows, sites)
 
+# AI-assisted (Step 6): Claude wrote this threshold report. The comments explain each part.
+# input() always returns text, so float() turns it into a number we can compare
+threshold = float(input("\nEnter a flow threshold (cfs): "))
+
+print(f"\nHours above {threshold:.1f} cfs in June 2021:")
+for i in range(len(sites)):
+    # flows[:, i] > threshold gives an array of True/False, one per reading;
+    # np.sum counts the Trues (True counts as 1, False as 0)
+    readings_above = np.sum(flows[:, i] > threshold)
+
+    # readings are 15 minutes apart, so each one above the threshold is 0.25 hours
+    hours_above = readings_above * 0.25
+
+    print(f"{sites[i]:<10}{hours_above:>8.2f} hours")
+
 plot_streamflow(dates, flows, sites)
