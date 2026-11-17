@@ -38,6 +38,10 @@ def plot_streamflow(dates, flows, sites):
     plt.legend()
     plt.grid(True)
 
+    # save the figure as an image in the project folder (must come before
+    # plt.show(), because closing the plot window clears the figure)
+    plt.savefig("provo_streamflow.png", dpi=150, bbox_inches="tight")
+
     plt.show()
 
 
